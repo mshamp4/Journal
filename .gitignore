@@ -1,3 +1,6 @@
 .vscode/*
 bin/
 obj/
+config.txt
+*.pdf
+Journal1.txt

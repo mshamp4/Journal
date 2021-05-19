@@ -1,6 +1,6 @@
 using System.IO;
-//using PdfSharp.Drawing;
-//using PdfSharp.Pdf;
+using PdfSharpCore.Pdf;
+using PdfSharpCore.Drawing;
 
 namespace Journal
 {
@@ -20,7 +20,7 @@ namespace Journal
         "FROM: 6/21/2021 TO: 7/2/2021", "FROM: 7/5/2021 TO: 7/16/2021", "FROM: 7/19/2021 TO: 7/30/2021", "FROM: 8/2/2021 TO: 8/6/2021"};
 
         private const string path = @"Journal1.txt";
-        
+
         public JournalLayout(int period)
         {
             name = "Matthew Shampine";
@@ -66,26 +66,21 @@ namespace Journal
             }
         }
 
-        /*
         public void CreatePDF()
         {
-            PdfDocument doc = new PdfDocument();
-            doc.Info.Title = "Journal-1";
+            var doc = new PdfDocument();
             PdfPage page = doc.AddPage();
-            var options  =  new XPdfFontOptions(PdfFontEncoding.Unicode);
-            XGraphics gfx = XGraphics.FromPdfPage(page);
-            XFont font = new XFont("Verdana", 20, XFontStyle.Regular , options);
-
-            gfx.DrawString(GetCurrentPeriod(), font, XBrushes.Black,
-            new XRect(0, 0, page.Width, page.Height), XStringFormats.Center);
-            doc.Save(path);
+            var gfx = XGraphics.FromPdfPage(page);
+            //XPdfFontOptions options = new XPdfFontOptions(PdfFontEncoding.Unicode);
+            var font = new XFont("Times New Roman", 12, XFontStyle.Regular);
+            gfx.DrawString("To:do// Work in progess", font, XBrushes.Black, new XRect(0, 0, page.Width, page.Height), XStringFormats.TopLeft);
+            doc.Save("journal1.pdf");
         }
-        */
 
         public override string ToString()
         {
-            return name + "\r\n" + company + "\r\n" + "Journal date: " + dateSubmitted + "\r\n" + "Journal period - " + 
-            journalPeriod + "\r\n" + "Total hours worked this period: " + totalhoursWorked + "\r\n";
+            return name + "\r" + company + "\r" + "Journal date: " + dateSubmitted + "\r" + "Journal period - " + 
+            journalPeriod + "\r" + "Total hours worked this period: " + totalhoursWorked + "\r";
         }
     }
 }

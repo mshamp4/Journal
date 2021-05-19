@@ -96,7 +96,7 @@ namespace Journal
                 ColorScheme = Colors.Dialog
             };
             
-            var loginLbl = new Label(jInfo.loginTime) 
+            var loginLbl = new Label("Last login: " + jInfo.loginTime)
             {
                 X = Pos.Percent(38),
                 Y = 0,
@@ -137,10 +137,10 @@ namespace Journal
                 ColorScheme = Colors.Menu
             };
 
-            var journalBar = new StatusBar (new StatusItem []
+            var journalBar = new StatusBar(new StatusItem []
             {
-                new StatusItem(Key.CtrlMask | Key.O, "~^O~ Open", () => Application.RequestStop ()),
-				new StatusItem(Key.CtrlMask | Key.P, "~^P~ Export PDF", () => Application.RequestStop ())
+                new StatusItem(Key.CtrlMask | Key.O, "~^O~ Open", () => Application.RequestStop()),
+				new StatusItem(Key.CtrlMask | Key.Z, "~^Z~ Export PDF", () => journal.CreatePDF())
 			});
 
             var journalField = new TextView() 
@@ -150,9 +150,7 @@ namespace Journal
                 Width = Dim.Fill(),
                 Height = Dim.Percent(100),
             };
- 
-            //journalField.LoadFile(@"C:\Users\msham\Desktop\490\Journal\Journal1.txt");
-            //journalField.CloseFile();
+
             journalField.Text = journal.GetCurrentPeriod();
             journalField.ReadOnly = true;
             jWin.Add(journalField);
@@ -219,6 +217,7 @@ namespace Journal
                 if (journalView)
                 {
                     mainWin.Remove(jWin);
+                    mainWin.Remove(journalBar);
                     journalView = false;
                 }
                 mainWin.Add(jWin);
