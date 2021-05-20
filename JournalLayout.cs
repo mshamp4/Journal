@@ -81,18 +81,29 @@ namespace Journal
         {
             var doc = new PdfDocument();
             PdfPage page = doc.AddPage();
-            doc.Info.Title = "Journal 6";
+            PdfPage page2 = doc.AddPage();
             var gfx = XGraphics.FromPdfPage(page);
+            var gfx2 = XGraphics.FromPdfPage(page2);
             //XPdfFontOptions options = new XPdfFontOptions(PdfFontEncoding.Unicode);
-            var font = new XFont("Times New Roman", 12, XFontStyle.Regular);
+            var font = new XFont("Courier New", 12, XFontStyle.Regular);
+            
             // loop to handle
             using (StringReader sr = new StringReader(GetCurrentPeriod()))
             {
-                int linePos = 25;
+                int linePos = 45;
                 string line;
+                PdfPage currentPage = page;
+                var currentGfx = gfx;
                 while((line = sr.ReadLine()) != null)
                 {
-                    gfx.DrawString(line, font, XBrushes.Black, new XRect(50, linePos, page.Width, page.Height), XStringFormats.TopLeft);
+                    if (linePos >= 777)
+                    {
+                        currentPage = page2;
+                        currentGfx = gfx2;
+                        linePos = 45;
+                    }
+                    System.Console.WriteLine(line + "linePos: " + linePos);
+                    currentGfx.DrawString(line, font, XBrushes.Black, new XRect(35, linePos, currentPage.Width, currentPage.Height), XStringFormats.TopLeft);
                     linePos += 12;
                 }
                 sr.Close();
