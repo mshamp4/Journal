@@ -6,7 +6,7 @@ namespace Journal
 {
     public class JournalDriver 
     {
-        private string configPath = @"config.txt";
+        private const string configPath = @"config.txt";
         public string loginTime = "";
         public string defaultHeader;
         public bool isDate;
@@ -83,6 +83,9 @@ namespace Journal
 
             JournalLayout journal = new JournalLayout(0);
             JournalDriver jInfo = new JournalDriver();
+
+            //Console.WriteLine(journal.ToString());
+            //System.Threading.Thread.Sleep(1000);
             
             Application.Init();
             var top = Application.Top;
@@ -139,7 +142,7 @@ namespace Journal
 
             var journalBar = new StatusBar(new StatusItem []
             {
-                new StatusItem(Key.CtrlMask | Key.O, "~^O~ Open", () => Application.RequestStop()),
+                new StatusItem(Key.CtrlMask | Key.O, "~^O~ Open", () => MessageBox.Query("Coming soon", "Feature not developed yet", "Okay")),
 				new StatusItem(Key.CtrlMask | Key.Z, "~^Z~ Export PDF", () => journal.CreatePDF())
 			});
 
@@ -232,12 +235,14 @@ namespace Journal
                 X = Pos.Percent(55),
                 Y = Pos.Top(mainWin)
             };
+            newBtn.Clicked += () => MessageBox.Query("Coming soon", "Feature not developed yet", "Okay");
 
             var hoursBtn = new Button("Add hours")
             { 
                 X = Pos.Left(journalBtn) + 6,
                 Y = Pos.Bottom(journalBtn)
             };
+            hoursBtn.Clicked += () => MessageBox.Query("Coming soon", "Feature not developed yet", "Okay");
             
             var exitBtn = new Button("Exit") 
             {

@@ -1,6 +1,7 @@
 using System.IO;
 using PdfSharpCore.Pdf;
 using PdfSharpCore.Drawing;
+using Newtonsoft.Json;
 
 namespace Journal
 {
@@ -16,18 +17,28 @@ namespace Journal
         
         private int totalhoursWorked;
 
-        private string[] journalDates = {"FROM: 5/10/2021 TO: 5/21/2021", "FROM: 5/24/2021 TO: 6/4/2021", "FROM: 6/7/2021 TO: 6/18/2021",
-        "FROM: 6/21/2021 TO: 7/2/2021", "FROM: 7/5/2021 TO: 7/16/2021", "FROM: 7/19/2021 TO: 7/30/2021", "FROM: 8/2/2021 TO: 8/6/2021"};
-
+        private string[] journalDates;
+        
         private const string path = @"Journal1.txt";
+
+        private const string jsonPath = "user.json";
 
         public JournalLayout(int period)
         {
-            name = "Matthew Shampine";
-            company = "Rock Central LLC";
-            dateSubmitted = "../../....";
-            journalPeriod = journalDates[period];
-            totalhoursWorked = 0;
+            using (System.IO.StreamReader sr = File.OpenText(jsonPath))
+            {
+                string jsonTxt = sr.ReadToEnd();
+                JournalFormat item = JsonConvert.DeserializeObject<JournalFormat>(jsonTxt);
+
+                name = item.Name;
+                company = item.Company;
+                dateSubmitted = item.DateSubmitted;
+                journalPeriod = item.JournalPeriod;
+                totalhoursWorked = item.TotalhoursWorked;
+                journalDates = item.JournalDates;
+
+                sr.Close();
+            }
         }
 
         public void CreateTask(string description)
@@ -70,17 +81,30 @@ namespace Journal
         {
             var doc = new PdfDocument();
             PdfPage page = doc.AddPage();
+            doc.Info.Title = "Journal 6";
             var gfx = XGraphics.FromPdfPage(page);
             //XPdfFontOptions options = new XPdfFontOptions(PdfFontEncoding.Unicode);
             var font = new XFont("Times New Roman", 12, XFontStyle.Regular);
-            gfx.DrawString("To:do// Work in progess", font, XBrushes.Black, new XRect(0, 0, page.Width, page.Height), XStringFormats.TopLeft);
+            // loop to handle
+            using (StringReader sr = new StringReader(GetCurrentPeriod()))
+            {
+                int linePos = 25;
+                string line;
+                while((line = sr.ReadLine()) != null)
+                {
+                    gfx.DrawString(line, font, XBrushes.Black, new XRect(50, linePos, page.Width, page.Height), XStringFormats.TopLeft);
+                    linePos += 12;
+                }
+                sr.Close();
+            }
             doc.Save("journal1.pdf");
+            //Process.Start(doc);
         }
 
         public override string ToString()
         {
-            return name + "\r" + company + "\r" + "Journal date: " + dateSubmitted + "\r" + "Journal period - " + 
-            journalPeriod + "\r" + "Total hours worked this period: " + totalhoursWorked + "\r";
+            return name + "\r\n" + company + "\r\n" + "Journal date: " + dateSubmitted + "\r\n" + "Journal period - " + 
+            journalPeriod + "\r\n" + "Total hours worked this period: " + totalhoursWorked + "\r\n";
         }
     }
 }

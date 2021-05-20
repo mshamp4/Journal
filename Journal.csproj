@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="NewtonSoft.Json" Version="13.0.1" />
     <PackageReference Include="PdfSharpCore" Version="1.2.16" />
     <PackageReference Include="Terminal.Gui" Version="1.0.0" />
   </ItemGroup>
