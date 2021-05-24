@@ -4,16 +4,16 @@ This basic TUI can add new journal tasks, view the current journal, and export a
 in pdf form that fits the requirements for CIS 490.
 
 ### Creating a new journal task:
-![Journal add task view](imgs/add_task.png?raw=true)
+![Journal add task view](https://github.com/mshamp4/Journal/blob/master/imgs/add_task.PNG?raw=true)
 
 ### Viewing current journal:
-![View journal](imgs/view_journal.png?raw=true)
+![View journal](https://github.com/mshamp4/Journal/blob/master/imgs/view_journal.PNG?raw=true)
 
 ### To run
 After cloning this repo head into the folder and type in command prompt or powershell:
-'''
+```
 dotnet run
-'''
+```
 Currently, this TUI has only been tested on the Windows platform and has not been verified 
 on Mac or Linux. However, this application is intended to be cross-platform and should
 work after further developmentation.
