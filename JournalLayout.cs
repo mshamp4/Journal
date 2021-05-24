@@ -87,7 +87,6 @@ namespace Journal
             //XPdfFontOptions options = new XPdfFontOptions(PdfFontEncoding.Unicode);
             var font = new XFont("Courier New", 12, XFontStyle.Regular);
             
-            // loop to handle
             using (StringReader sr = new StringReader(GetCurrentPeriod()))
             {
                 int linePos = 45;
