@@ -26,7 +26,7 @@ namespace Journal
 
         public bool isToday;
 
-        private const string JOURNAL_PATH = @"journal4.txt";
+        private const string JOURNAL_PATH = @"journal3.txt";
 
         private const string USER_INFO_PATH = @"user1.json";
 
@@ -243,11 +243,12 @@ namespace Journal
             }
 
             doc.Save("journal3.pdf");
-            //TODO: Fix bug where after closing pdf focus doesnt shift back to TUI.
-
-            string execPath = String.Concat(@"/c ", JOURNAL_PATH);
-            //Console.WriteLine(execPath);
+            
+            string execPath = @"/c " + JOURNAL_PATH;
+            Console.WriteLine(execPath);
             System.Diagnostics.Process.Start(@"cmd.exe", @"/c journal3.pdf");
+            //TODO: Fix bug where after closing pdf focus doesnt shift back to TUI.
+            //Environment.Exit(0);
         }
 
         public override string ToString()
