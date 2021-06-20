@@ -12,6 +12,10 @@ namespace Journal
 
         public int TotalhoursWorked {get; set;}
 
+        public string LoginTime {get; set;}
+
+        public string Date {get; set;}
+
         public string[] JournalDates {get; set;}
 
     }

@@ -1,9 +1,18 @@
 {
-    "name": "Your name",
-    "company": "Company",
-    "dateSubmitted": "../../....",
-    "journalPeriod": "FROM: 5/10/2021 TO: 5/21/2021",
-    "totalHoursWorked": 0,
-    "journalDates": ["FROM: 5/10/2021 TO: 5/21/2021", "FROM: 5/24/2021 TO: 6/4/2021", "FROM: 6/7/2021 TO: 6/18/2021",
-        "FROM: 6/21/2021 TO: 7/2/2021", "FROM: 7/5/2021 TO: 7/16/2021", "FROM: 7/19/2021 TO: 7/30/2021", "FROM: 8/2/2021 TO: 8/6/2021"]
+  "Name": "Your name",
+  "Company": "Company",
+  "DateSubmitted": "../../....",
+  "JournalPeriod": "FROM: 5/10/2021 TO: 5/21/2021",
+  "TotalhoursWorked": 0,
+  "LoginTime": "11:31:10 AM",
+  "Date": "Saturday, June 19, 2021",
+  "JournalDates": [
+    "FROM: 5/10/2021 TO: 5/21/2021",
+    "FROM: 5/24/2021 TO: 6/4/2021",
+    "FROM: 6/7/2021 TO: 6/18/2021",
+    "FROM: 6/21/2021 TO: 7/2/2021",
+    "FROM: 7/5/2021 TO: 7/16/2021",
+    "FROM: 7/19/2021 TO: 7/30/2021",
+    "FROM: 8/2/2021 TO: 8/6/2021"
+  ]
 }

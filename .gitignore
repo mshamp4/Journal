@@ -1,7 +1,6 @@
 .vscode/*
 bin/
 obj/
-config.txt
+*.txt
 *.pdf
-Journal1.txt
 user1.json

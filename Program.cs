@@ -1,79 +1,7 @@
-﻿using System;
-using System.IO;
-using Terminal.Gui;
+﻿using Terminal.Gui;
 
 namespace Journal
 {
-    public class JournalDriver 
-    {
-        private const string configPath = @"config.txt";
-        public string loginTime = "";
-        public string defaultHeader;
-        public bool isDate;
-
-        public JournalDriver()
-        {
-            defaultHeader = GetHeader();
-            isDate = VerifyDate();
-        }
-
-        public bool VerifyDate()
-        {
-            loginTime = DateTime.Now.ToString("hh:mm:ss tt");
-            bool date = false;
-            if (!File.Exists(configPath))
-            {
-                TextWriter tw = new StreamWriter(configPath);
-                tw.WriteLine(DateTime.Now.ToString("hh:mm:ss tt"));
-                tw.WriteLine(System.DateTime.Today.ToString("D"));
-                tw.Close();
-                return date;
-            }
-            else
-            {
-                using (StreamReader sr = File.OpenText(configPath))
-                {
-                    loginTime = sr.ReadLine();
-                    string pastDate = sr.ReadLine();
-                    if (pastDate.Equals(System.DateTime.Today.ToString("D")))
-                    {
-                        date = true;
-                    }
-                    sr.Close();
-                }
-
-                TextWriter newTxt = new StreamWriter(configPath);
-                newTxt.WriteLine(DateTime.Now.ToString("hh:mm:ss tt"));
-                newTxt.WriteLine(System.DateTime.Today.ToString("D"));
-                newTxt.Close();
-            }
-            return date;
-        }
-        public string GetHeader() 
-        {
-            string header = System.DateTime.Today.ToString("D") + 
-                        "\n---------------------------------------------------------------------------\n" +
-                        DateTime.Now.ToString("hh:mm tt\n");
-            if (!File.Exists(configPath))
-            {
-                return header;
-            }
-            else 
-            {
-                using (StreamReader sr = File.OpenText(configPath))
-                {
-                    sr.ReadLine();
-                    string pastDate = sr.ReadLine();
-                    if (pastDate.Equals(System.DateTime.Today.ToString("D")))
-                    {
-                        header = DateTime.Now.ToString("hh:mm tt\n");
-                    }
-                    sr.Close();
-                }
-            }
-            return header;
-        }
-    }
     static class Program
     {
         static void Main(string[] args)
@@ -82,11 +10,7 @@ namespace Journal
             bool journalView = false;
 
             JournalLayout journal = new JournalLayout(0);
-            JournalDriver jInfo = new JournalDriver();
 
-            //Console.WriteLine(journal.ToString());
-            //System.Threading.Thread.Sleep(1000);
-            
             Application.Init();
             var top = Application.Top;
             
@@ -99,7 +23,7 @@ namespace Journal
                 ColorScheme = Colors.Dialog
             };
             
-            var loginLbl = new Label("Last login: " + jInfo.loginTime)
+            var loginLbl = new Label("Last login: " + journal.lastLoginTime)
             {
                 X = Pos.Percent(38),
                 Y = 0,
@@ -166,7 +90,7 @@ namespace Journal
                 Height = 10
             };
 
-            taskField.Text = jInfo.defaultHeader;
+            taskField.Text = journal.GetHeader();
             taskField.WordWrap = true;
             taskWin.Add(taskField);
             
@@ -182,7 +106,6 @@ namespace Journal
                 Y = Pos.Top(mainWin)
             };
 
-            Point cursorPos = new Point(0, 3);
             taskBtn.Clicked += () => 
             {
                 if (journalView)
@@ -196,9 +119,12 @@ namespace Journal
                     mainWin.Remove(taskWin);
                     taskView = false;
                 }
+                // update time somewhere
                 mainWin.Add(taskWin);
                 taskWin.SetFocus();
                 taskField.SetFocus();
+                
+                Point cursorPos = new Point(0, 3);
                 taskField.CursorPosition = cursorPos;
                 taskField.ScrollTo(0, true);
                 taskView = true;
@@ -260,7 +186,7 @@ namespace Journal
                     menuWin.SetFocus();
                     journalBtn.SetFocus();
                     journal.CreateTask(taskField.Text.ToString());
-                    taskField.Text = jInfo.GetHeader();
+                    taskField.Text = journal.GetHeader();
                     journalField.Text = journal.GetCurrentPeriod();
                 }
                 else 
